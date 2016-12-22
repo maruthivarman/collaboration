@@ -48,19 +48,36 @@ public class BlogDAOImpl implements BlogDAO {
 
 	@Transactional
 	public void insertBlog(Blog blog) {
-		// TODO Auto-generated method stub
+		sessionFactory.getCurrentSession().saveOrUpdate(blog);
 
 	}
 
 	@Transactional
 	public Blog updateBlog(int id, Blog blog) {
-		// TODO Auto-generated method stub
+Session session=sessionFactory.openSession();
+		
+		System.out.println("Id of Blog is " +blog.getBlogid());
+		if(session.get(Blog.class, id)==null)
 		return null;
+		session.merge(blog); 
+		
+		Blog updatedBlog=(Blog)session.get(Blog.class, id); 
+		session.flush();
+		session.close();
+		return updatedBlog;
 	}
+	
 
 	@Transactional
 	public void deleteBlog(int id) {
-		// TODO Auto-generated method stub
+Session session=sessionFactory.openSession();
+		
+Blog blog=(Blog)session.get(Blog.class, id);
+		session.delete(blog);
+		
+		session.flush();
+		session.close();
+
 
 	}
 

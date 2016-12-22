@@ -6,13 +6,14 @@ package com.niit.Services;
 
 import java.util.List;
 
-import javax.transaction.Transactional;
+
 
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.niit.model.User;
 @Repository("UserDAO")
@@ -59,8 +60,7 @@ public class UserDAOImpl implements UserDAO {
 	}
 	@Transactional
 	public void insertUser(User user) {
-		// TODO Auto-generated method stub
-
+		sessionFactory.getCurrentSession().saveOrUpdate(user);
 	}
 	@Transactional
 	public User updateUser(int id, User user) {
@@ -95,6 +95,22 @@ public class UserDAOImpl implements UserDAO {
 
 	}
 
+	@Override
+	public User authenticate(User user) {
+		Session session=sessionFactory.openSession();
+		Query query=session.createQuery(
+		"from User where username=?  and password=?");
+		
+		query.setString(0, user.getUsername());
+		query.setString(1, user.getPassword());
+		User validUser=(User)query.uniqueResult();
+		session.close();
+		return validUser;
+	}
+
+	
+	}
+
 	
 
-}
+

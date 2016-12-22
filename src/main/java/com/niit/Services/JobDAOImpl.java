@@ -10,10 +10,11 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.niit.model.Forum;
-@Repository("ForumDAO")
+import com.niit.model.Job;
+@Repository("JobDAO")
 @Transactional
-public class ForumDAOImpl implements ForumDAO {
+public class JobDAOImpl implements JobDAO {
+	
 	@Autowired
 	private SessionFactory sessionFactory;
 	
@@ -21,7 +22,7 @@ public class ForumDAOImpl implements ForumDAO {
 		return sessionFactory;
 	}
 
-	public ForumDAOImpl(SessionFactory sessionFactory) {
+	public JobDAOImpl(SessionFactory sessionFactory) {
 		super();
 		this.sessionFactory = sessionFactory;
 	}
@@ -31,51 +32,57 @@ public class ForumDAOImpl implements ForumDAO {
 	}
 
 	@Transactional
-	public List<Forum> getAllForum() {
+	public List<Job> getAllJob() {
 		Session session=sessionFactory.openSession();
-		Query query=session.createQuery("from Forum");
+		Query query=session.createQuery("from Job");
 		@SuppressWarnings("unchecked")
-		List<Forum> forum=query.list();
+		List<Job> job=query.list();
 		session.close();
-		return forum;
+		return job;
 	}
 
 	@Transactional
-	public Forum getForum(int forumid) {
-		return (Forum)sessionFactory.getCurrentSession().get(Forum.class, forumid);
+	public Job getJob(int jobid) {
+		return (Job)sessionFactory.getCurrentSession().get(Job.class, jobid);
 	}
 
 	@Transactional
-	public void insertForum(Forum forum) {
-		sessionFactory.getCurrentSession().saveOrUpdate(forum);
+	public void insertJob(Job job) {
+		sessionFactory.getCurrentSession().saveOrUpdate(job);
 
 	}
 
 	@Transactional
-	public Forum updateForum(int id, Forum forum) {
-
-		Session session=sessionFactory.openSession();
-		
-		System.out.println("Id of Forum is " +forum.getForumid());
-		if(session.get(Forum.class, id)==null)
-		return null;
-		session.merge(forum); 
-		
-		Forum updatedForum=(Forum)session.get(Forum.class, id); 
-		session.flush();
-		session.close();
-		return updatedForum;
-	}
-
-	@Transactional
-	public void deleteForum(int id) {
+	public Job updateJob(int id, Job job) {
 Session session=sessionFactory.openSession();
 		
-		Forum forum=(Forum)session.get(Forum.class, id);
-		session.delete(forum);
+		System.out.println("Id of Job is " +job.getJobid());
+		if(session.get(Job.class, id)==null)
+		return null;
+		session.merge(job); 
+		
+		Job updatedJob=(Job)session.get(Job.class, id); 
+		session.flush();
+		session.close();
+		return updatedJob;
+	}
+	
+
+	@Transactional
+	public void deleteJob(int id) {
+Session session=sessionFactory.openSession();
+		
+Job job=(Job)session.get(Job.class, id);
+		session.delete(job);
 		
 		session.flush();
 		session.close();
+
+
+	}
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
 
 	}
 

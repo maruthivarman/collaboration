@@ -11,4 +11,6 @@ public interface UserDAO {
 	 public User updateUser(int id,User user);
 	 public void deleteUser(int id);
 	 public void deleteAllUser(User user);
+	 public User authenticate(User user);
+	 
 }

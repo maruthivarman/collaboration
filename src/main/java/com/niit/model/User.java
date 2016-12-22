@@ -21,6 +21,11 @@ private String emailid;
 private Date DOB;
 private String address;
 private Long mobilenumber;
+private String role;
+/*private boolean enabled;
+private boolean isOnline;*/
+
+
 public int getUserid() {
 	return userid;
 }
@@ -63,6 +68,28 @@ public Long getMobilenumber() {
 public void setMobilenumber(Long mobilenumber) {
 	this.mobilenumber = mobilenumber;
 }
+public String getRole() {
+	return role;
+}
+public void setRole(String role) {
+	this.role = role;
+}
+/*public boolean isStatus() {
+	return enabled;
+}
+public void setStatus(boolean status) {
+	this.enabled = status;
+}
+public boolean isOnline() {
+	return isOnline;
+}
+public void setOnline(boolean isOnline) {
+	this.isOnline = isOnline;
+}
+@Override
+public String toString() {
+	return this.username + " " + this.emailid + " " + this.role + "\n";
+}*/
 
 
 }

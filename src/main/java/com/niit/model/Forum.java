@@ -7,12 +7,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 @Entity
-@Table(name="Forumtable")
+@Table(name="foruminfo")
 public class Forum {
+	
 	@Id
 	@GeneratedValue
 	private int forumid;
-	private int userid;
+	private String username;
 	private String forumtitle;
 	private String forumdetails;
 	private String comment;
@@ -23,12 +24,11 @@ public class Forum {
 	public void setForumid(int forumid) {
 		this.forumid = forumid;
 	}
-	
-	public int getUserid() {
-		return userid;
+	public String getUsername() {
+		return username;
 	}
-	public void setUserid(int userid) {
-		this.userid = userid;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 	public String getForumtitle() {
 		return forumtitle;
@@ -54,6 +54,5 @@ public class Forum {
 	public void setForumdate(Date forumdate) {
 		this.forumdate = forumdate;
 	}
-	
 	
 }

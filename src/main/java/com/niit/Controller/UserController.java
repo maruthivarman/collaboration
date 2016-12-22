@@ -19,6 +19,8 @@ import com.niit.model.User;
 
 @Controller
 public class UserController {
+	
+	
 @Autowired
 private UserDAO userDAO;
 
@@ -31,8 +33,44 @@ public void setUserDAO(UserDAO userDAO) {
 	this.userDAO = userDAO;
 }
 
+/*@RequestMapping(value="/login",method=RequestMethod.POST)
+public ResponseEntity<?> login(@RequestBody User user){
+	logger.debug("Entering USERCONTROLLER : LOGIN");
+	User validUser=userDAO.authenticate(user);
+	if(validUser==null){
+		logger.debug("validUser is null");
+		Error error=new Error(1,"Username and password doesnt exists...");
+		return new ResponseEntity<Error>(error,HttpStatus.UNAUTHORIZED); 
+	}
+	else{
+		validUser.setOnline(true);
+		userDAO.updateUser(validUser); 
+		logger.debug("validUser is not null");
+		return new ResponseEntity<User>(validUser,HttpStatus.OK);
+	}
+}*/
 
-
+/*@RequestMapping(value="/register",method=RequestMethod.POST)
+public ResponseEntity<?> registerUser(@RequestBody User user){
+	
+	try{
+	logger.debug("USERCONTROLLER=>REGISTER " + user);
+	user.setStatus(true);
+	user.setOnline(false);
+	User savedUser=userDAO.authenticate(user);
+	logger.debug("User Id generated is " + savedUser.getUserid());
+	if(savedUser.getUserid()==0){
+		Error error=new Error(2,"Couldnt insert user details ");
+		return new ResponseEntity<Error>(error , HttpStatus.CONFLICT);
+	}
+	else
+		return new ResponseEntity<User>(savedUser,HttpStatus.OK);
+	}catch(Exception e){
+		e.printStackTrace();
+		Error error=new Error(2,"Couldnt insert user details. Cannot have null/duplicate values " + e.getMessage());
+		return new ResponseEntity<Error>(error , HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+}*/
 @RequestMapping(value="user",method=RequestMethod.GET)
 public  ResponseEntity<List<User>> getAllUsers(){
 	System.out.println(userDAO.getAllUsers());
@@ -53,7 +91,7 @@ public ResponseEntity<User> getUserById(@PathVariable(value="id") int id){
 
 @RequestMapping(value="user",method=RequestMethod.POST)
 
-public ResponseEntity<Void> createUser(@RequestBody User user, UriComponentsBuilder build)
+public ResponseEntity createUser(@RequestBody User user, UriComponentsBuilder build)
 {
 	userDAO.insertUser(user);
 	HttpHeaders headers=new HttpHeaders();
@@ -64,7 +102,7 @@ public ResponseEntity<Void> createUser(@RequestBody User user, UriComponentsBuil
 			.build()
 			.toUri();
 	headers.setLocation(urilocation);
-	return new ResponseEntity<Void>(headers,HttpStatus.CREATED);
+	return new ResponseEntity(headers,HttpStatus.CREATED);
 }
 
 
